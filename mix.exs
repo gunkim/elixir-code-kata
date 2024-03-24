@@ -3,10 +3,11 @@ defmodule ElixirCodeKata.MixProject do
 
   def project do
     [
-      apps_path: "apps",
+      apps_path: "",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      apps: [:supermarket_pricing]
     ]
   end
 
