@@ -1,9 +1,9 @@
 defmodule ProductPriceType do
-  @enumerable [:quantity, :weight]
+  @single :single
+  @bundle :bundle
+  @found :found
 
-  defmacro __using__(_) do
-    quote do
-      @type t :: unquote(@enumerable)
-    end
-  end
+  def single, do: @single
+  def bundle, do: @bundle
+  def found, do: @found
 end

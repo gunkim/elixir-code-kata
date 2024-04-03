@@ -15,10 +15,10 @@ defmodule SupermarketPricing do
   """
   def start do
     products = [
-      %Product{name: "Peanut Can", price: Decimal.new(0.65), price_type: :unit},
-      %Product{name: "Apple", price: Decimal.new(1), price_type: :unit},
-      %Product{name: "Banana", price: Decimal.new(1.99), price_type: :unit},
-      %Product{name: "Shampoo", price: Decimal.new(3), price_type: :unit}
+      Product.create_single("Peanut Can", Decimal.new("0.65")),
+      Product.create_bundle("Apple", Decimal.new("1"), 3),
+      Product.create_found("Banana", Decimal.new("1.99"), 1),
+      Product.create_single("Shampoo", Decimal.new("1.5"))
     ]
 
     IO.puts "Product List:"
@@ -27,6 +27,6 @@ defmodule SupermarketPricing do
   end
 
   defp print_product(product) do
-    IO.puts "#{product.name} - #{product.price} - #{product.price_type}"
+    IO.puts "#{product.name} - #{product.price} - #{product.price_type} - #{product.count}"
   end
 end
