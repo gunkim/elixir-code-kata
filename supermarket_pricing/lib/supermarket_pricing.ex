@@ -1,32 +1,41 @@
-defmodule SupermarketPricing do
-  @moduledoc """
-  Documentation for `SupermarketPricing`.
-  """
+  defmodule SupermarketPricing do
+    @moduledoc """
+    Documentation for `SupermarketPricing`.
+    """
 
-  @doc """
-  Endpoints for `SupermarketPricing`.
+    @doc """
+    Endpoints for `SupermarketPricing`.
 
-  # TODO
-  Products sold by pound should also be purchasable in ounces.
-  - Single item for $0.65
-  - Three items for $1
-  - $1.99 per pound, purchase in fractional pounds is possible.
-  - Two items for $3, buy two get one free, not necessarily buying in pairs. In this case, the price is $1.5 per item.
-  """
-  def start do
-    products = [
-      Product.create_single("Peanut Can", Decimal.new("0.65")),
-      Product.create_bundle("Apple", Decimal.new("1"), 3),
-      Product.create_found("Banana", Decimal.new("1.99"), 1),
-      Product.create_single("Shampoo", Decimal.new("1.5"))
-    ]
+    # TODO
+    Products sold by pound should also be purchasable in ounces.
+    - Two items for $3, buy two get one free, not necessarily buying in pairs. In this case, the price is $1.5 per item.
+    """
+    def start do
+      products = [
+        Product.create_single("Peanut Can", Decimal.new("0.65")),
+        Product.create_bundle("Apple", Decimal.new("1"), 3),
+        Product.create_found("Banana", Decimal.new("1.99"), 1),
+        Product.create_single("Shampoo", Decimal.new("1.5"))
+      ]
 
-    IO.puts "Product List:"
-    products
-    |> Enum.each(&print_product/1)
-  end
+      IO.puts "========== Product List =========="
+      products
+      |> Enum.each(&Product.print_product/1)
+      IO.puts("=======================")
 
-  defp print_product(product) do
-    IO.puts "#{product.name} - #{product.price} - #{product.price_type} - #{product.count}"
-  end
+      selected_product = IO.gets("Enter product name: ")
+                         |> String.trim()
+                         |> (&Products.search(products, &1)).()
+
+      IO.puts "Information of the product you want to buy:"
+      Product.print_product(selected_product)
+
+      IO.puts "Please enter the quantity and price you want to buy:"
+      purchase_quantity_or_price = IO.gets("Input count or price or weight: ")
+                                   |> String.trim()
+                                   |> Decimal.new()
+
+      result = Product.price(selected_product, purchase_quantity_or_price)
+      IO.puts "Total Price: #{Decimal.to_string(result)}"
+    end
 end

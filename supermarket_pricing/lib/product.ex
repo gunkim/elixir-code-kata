@@ -41,6 +41,38 @@ defmodule Product do
     |> Map.put(:found, found)
   end
 
+  @doc """
+    Prints a product to the console.
+  """
+  @spec print_product(t) :: :ok
+  def print_product(product) do
+    IO.write("Product Name: #{product.name}, ")
+
+    case product.price_type do
+      :single ->
+        IO.puts "Per unit: $#{Decimal.to_string(product.price)}"
+      :bundle ->
+        IO.puts "Per bundle of #{product.count} units: $#{Decimal.to_string(product.price)}"
+      :found ->
+        IO.puts "Per pound: $#{Decimal.to_string(product.price)}"
+    end
+  end
+
+  @doc """
+    Calculates the price of a product.
+  """
+  @spec price(t, Decimal.t) :: Decimal.t
+  def price(product, count) do
+    case product.price_type do
+      :single -> Decimal.mult(count, product.price)
+      :bundle ->
+        Decimal.div(count, product.count)
+        |> Decimal.mult(product.price)
+        |> Decimal.round(2)
+      :found -> Decimal.mult(count, product.price)
+    end
+  end
+
   # Creates a base product.
   @spec create_base(String.t, Decimal.t, ProductPriceType.t) :: t
   defp create_base(name, price, price_type) do
