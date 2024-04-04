@@ -7,7 +7,6 @@
     Endpoints for `SupermarketPricing`.
 
     # TODO
-    Products sold by pound should also be purchasable in ounces.
     - Two items for $3, buy two get one free, not necessarily buying in pairs. In this case, the price is $1.5 per item.
     """
     def start do
