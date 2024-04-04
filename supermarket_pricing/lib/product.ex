@@ -6,13 +6,13 @@ defmodule Product do
                name: String.t,
                price: Decimal.t,
                price_type: ProductPriceType.t,
-               count: integer,
+               bundle_size: integer,
                found: integer
              }
   defstruct name: nil,
             price: nil,
             price_type: nil,
-            count: nil,
+            bundle_size: nil,
             found: nil
 
   @doc """
@@ -27,9 +27,9 @@ defmodule Product do
     Creates a bundle product.
   """
   @spec create_bundle(String.t, Decimal.t, integer) :: t
-  def create_bundle(name, price, count) do
+  def create_bundle(name, price, bundle_size) do
     create_base(name, price, ProductPriceType.bundle)
-    |> Map.put(:count, count)
+    |> Map.put(:bundle_size, bundle_size)
   end
 
   @doc """
@@ -45,32 +45,36 @@ defmodule Product do
     Prints a product to the console.
   """
   @spec print_product(t) :: :ok
-  def print_product(product) do
-    IO.write("Product Name: #{product.name}, ")
-
-    case product.price_type do
-      :single ->
-        IO.puts "Per unit: $#{Decimal.to_string(product.price)}"
-      :bundle ->
-        IO.puts "Per bundle of #{product.count} units: $#{Decimal.to_string(product.price)}"
-      :found ->
-        IO.puts "Per pound: $#{Decimal.to_string(product.price)}"
-    end
+  def print_product(%{price_type: :single} = product) do
+    IO.puts "Product Name: #{product.name}, Per unit: #{to_dollar(product.price)}"
+  end
+  @spec print_product(t) :: :ok
+  def print_product(%{price_type: :bundle} = product) do
+    IO.puts "Product Name: #{product.name}, Per bundle of #{product.bundle_size} units: #{to_dollar(product.price)}"
+  end
+  @spec print_product(t) :: :ok
+  def print_product(%{price_type: :found} = product) do
+    IO.puts "Product Name: #{product.name}, Per pound: #{to_dollar(product.price)}"
   end
 
   @doc """
     Calculates the price of a product.
   """
   @spec price(t, Decimal.t) :: Decimal.t
-  def price(product, count) do
+  def price(product, bundle_size) do
     case product.price_type do
-      :single -> Decimal.mult(count, product.price)
+      :single -> Decimal.mult(bundle_size, product.price)
       :bundle ->
-        Decimal.div(count, product.count)
+        Decimal.div(bundle_size, product.bundle_size)
         |> Decimal.mult(product.price)
         |> Decimal.round(2)
-      :found -> Decimal.mult(count, product.price)
+      :found -> Decimal.mult(bundle_size, product.price)
     end
+  end
+
+  # Converts a price to a dollar string.
+  defp to_dollar(price) do
+    "$#{Decimal.to_string(price)}"
   end
 
   # Creates a base product.
