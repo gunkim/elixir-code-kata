@@ -49,13 +49,17 @@ defmodule BundleProduct do
 end
 
 defmodule FoundProduct do
-  defstruct [:name, :price]
-
+  defstruct [:name, :price, :found]
   defimpl Product do
     def print_product(product) do
-      IO.puts "Product Name: #{product.name}, Per pound: #{ProductHelper.to_dollar(product.price)}"
+      IO.puts "Product Name: #{product.name}, Price: #{product.found} pounds for #{ProductHelper.to_dollar(product.price)} per unit"
     end
 
-    def price(product, weight), do: Decimal.mult(weight, product.price)
+    def price(product, found) do
+      effective_price = Decimal.mult(Decimal.new(product.price), Decimal.new(product.found))
+      total_price = Decimal.mult(found, effective_price)
+
+      Decimal.round(total_price, 2, :down)
+    end
   end
 end

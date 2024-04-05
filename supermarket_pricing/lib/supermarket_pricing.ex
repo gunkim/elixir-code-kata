@@ -13,7 +13,7 @@
       products = [
         %SingleProduct{name: "Peanut Can", price: Decimal.new("0.65")},
         %BundleProduct{name: "Apple", price: Decimal.new("1"), bundle_size: 3},
-        %FoundProduct{name: "Banana", price: Decimal.new("1.99")},
+        %FoundProduct{name: "Banana", price: Decimal.new("1.99"), found: 4},
         %SingleProduct{name: "Shampoo", price: Decimal.new("1.5")}
       ]
 
