@@ -30,7 +30,7 @@
       Product.print_product(selected_product)
 
       IO.puts "Please enter the quantity or weight(found) you wish to purchase."
-      purchase_quantity_or_weight = IO.gets("Input quantity or weight(found):")
+      purchase_quantity_or_weight = IO.gets("Input quantity or weight(found): ")
                                     |> String.trim()
                                     |> Decimal.new()
 
