@@ -29,12 +29,12 @@
       IO.puts "Information of the product you want to buy:"
       Product.print_product(selected_product)
 
-      IO.puts "Please enter the quantity and price you want to buy:"
-      purchase_quantity_or_price = IO.gets("Input count or price or weight: ")
-                                   |> String.trim()
-                                   |> Decimal.new()
+      IO.puts "Please enter the quantity or weight(found) you wish to purchase."
+      purchase_quantity_or_weight = IO.gets("Input quantity or weight(found):")
+                                    |> String.trim()
+                                    |> Decimal.new()
 
-      result = Product.price(selected_product, purchase_quantity_or_price)
+      result = Product.price(selected_product, purchase_quantity_or_weight)
       IO.puts "Total Price: #{Decimal.to_string(result)}"
     end
 end
