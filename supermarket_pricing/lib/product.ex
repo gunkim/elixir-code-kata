@@ -61,16 +61,12 @@ defmodule Product do
     Calculates the price of a product.
   """
   @spec price(t, Decimal.t) :: Decimal.t
-  def price(product, bundle_size) do
-    case product.price_type do
-      :single -> Decimal.mult(bundle_size, product.price)
-      :bundle ->
-        Decimal.div(bundle_size, product.bundle_size)
-        |> Decimal.mult(product.price)
-        |> Decimal.round(2)
-      :found -> Decimal.mult(bundle_size, product.price)
-    end
-  end
+  def price(%Product{price_type: :single, price: price} = product, quantity), do: Decimal.mult(quantity, price)
+  def price(%Product{price_type: :bundle, price: price, bundle_size: bundle_size} = product, quantity), do:
+    Decimal.div(quantity, Decimal.new(bundle_size))
+    |> Decimal.mult(price)
+    |> Decimal.round(2)
+  def price(%Product{price_type: :found, price: price} = product, weight), do: Decimal.mult(weight, price)
 
   # Converts a price to a dollar string.
   defp to_dollar(price) do
