@@ -97,10 +97,10 @@ defmodule FoundProduct do
     end
 
     def price(product, found) do
-      effective_price = Decimal.mult(Decimal.new(product.price), Decimal.new(product.found))
-      total_price = Decimal.mult(found, effective_price)
-
-      Decimal.round(total_price, 2, :down)
+      Decimal.new(product.price)
+      |> Decimal.mult(Decimal.new(product.found))
+      |> (&Decimal.mult(found, &1)).()
+      |> Decimal.round(2)
     end
   end
 end
