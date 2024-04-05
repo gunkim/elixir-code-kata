@@ -11,10 +11,10 @@
     """
     def start do
       products = [
-        Product.create_single("Peanut Can", Decimal.new("0.65")),
-        Product.create_bundle("Apple", Decimal.new("1"), 3),
-        Product.create_found("Banana", Decimal.new("1.99"), 1),
-        Product.create_single("Shampoo", Decimal.new("1.5"))
+        %SingleProduct{name: "Peanut Can", price: Decimal.new("0.65")},
+        %BundleProduct{name: "Apple", price: Decimal.new("1"), bundle_size: 3},
+        %FoundProduct{name: "Banana", price: Decimal.new("1.99")},
+        %SingleProduct{name: "Shampoo", price: Decimal.new("1.5")}
       ]
 
       IO.puts "========== Product List =========="
