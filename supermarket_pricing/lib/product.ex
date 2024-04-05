@@ -1,4 +1,7 @@
 defmodule ProductHelper do
+  @doc """
+    Converts a price to a dollar format.
+  """
   def to_dollar(price) do
     "$#{Decimal.to_string(price)}"
   end
@@ -7,7 +10,13 @@ end
 defprotocol Product do
   @fallback_to_any true
 
+  @doc """
+    Prints the product information.
+  """
   def print_product(product)
+  @doc """
+    Calculates the price of the product.
+  """
   def price(product, amount)
 end
 
