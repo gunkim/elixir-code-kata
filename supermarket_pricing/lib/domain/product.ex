@@ -1,4 +1,4 @@
-defmodule ProductHelper do
+defmodule Domain.ProductHelper do
   @moduledoc """
     Module for the ProductHelper struct to model products.
   """
@@ -7,7 +7,7 @@ defmodule ProductHelper do
     Converts a price to a dollar format.
 
     ## Example
-        iex> ProductHelper.to_dollar(Decimal.new("1.5"))
+        iex> Domain.ProductHelper.to_dollar(Decimal.new("1.5"))
         "$1.5"
   """
   @spec to_dollar(Decimal.t) :: String.t
@@ -16,7 +16,7 @@ defmodule ProductHelper do
   end
 end
 
-defprotocol Product do
+defprotocol Domain.Product do
   @moduledoc """
     Protocol for the Product struct to model products.
   """
@@ -36,7 +36,7 @@ defprotocol Product do
   def price(product, amount)
 end
 
-defmodule SingleProduct do
+defmodule Domain.SingleProduct do
   @moduledoc """
     Module for the SingleProduct struct to model products.
 
@@ -47,16 +47,16 @@ defmodule SingleProduct do
 
   defstruct [:name, :price]
 
-  defimpl Product do
+  defimpl Domain.Product do
     def print_product(product) do
-      IO.puts "Product Name: #{product.name}, Per unit: #{ProductHelper.to_dollar(product.price)}"
+      IO.puts "Product Name: #{product.name}, Per unit: #{Domain.ProductHelper.to_dollar(product.price)}"
     end
 
     def price(product, quantity), do: Decimal.mult(quantity, product.price)
   end
 end
 
-defmodule BundleProduct do
+defmodule Domain.BundleProduct do
   @moduledoc """
     Module for the BundleProduct struct to model products.
 
@@ -67,9 +67,9 @@ defmodule BundleProduct do
 
   defstruct [:name, :price, :bundle_size]
 
-  defimpl Product do
+  defimpl Domain.Product do
     def print_product(product) do
-      IO.puts "Product Name: #{product.name}, Per bundle of #{product.bundle_size} units: #{ProductHelper.to_dollar(product.price)}"
+      IO.puts "Product Name: #{product.name}, Per bundle of #{product.bundle_size} units: #{Domain.ProductHelper.to_dollar(product.price)}"
     end
 
     def price(product, quantity) do
@@ -80,7 +80,7 @@ defmodule BundleProduct do
   end
 end
 
-defmodule FoundProduct do
+defmodule Domain.FoundProduct do
   @moduledoc """
     Module for the FoundProduct struct to model products.
 
@@ -91,9 +91,9 @@ defmodule FoundProduct do
 
   defstruct [:name, :price, :found]
 
-  defimpl Product do
+  defimpl Domain.Product do
     def print_product(product) do
-      IO.puts "Product Name: #{product.name}, Price: #{product.found} pounds for #{ProductHelper.to_dollar(product.price)} per unit"
+      IO.puts "Product Name: #{product.name}, Price: #{product.found} pounds for #{Domain.ProductHelper.to_dollar(product.price)} per unit"
     end
 
     def price(product, found) do

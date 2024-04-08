@@ -1,4 +1,4 @@
-defmodule Products do
+defmodule Domain.Products do
   @moduledoc """
     Module for the Products struct to model products.
   """
