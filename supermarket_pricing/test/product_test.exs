@@ -1,6 +1,12 @@
 defmodule ProductTest do
   use ExUnit.Case
-  doctest Product
+  doctest Domain.Product
+
+  alias Domain.{
+    BundleProduct,
+    FoundProduct,
+    SingleProduct,
+    Product}
 
   setup do
     single_product = %SingleProduct{name: "Peanut Can", price: Decimal.new("0.65")}

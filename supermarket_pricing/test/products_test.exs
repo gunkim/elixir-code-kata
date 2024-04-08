@@ -1,6 +1,12 @@
 defmodule ProductsTest do
   use ExUnit.Case
-  doctest Products
+  doctest Domain.Products
+
+  alias Domain.{
+    BundleProduct,
+    FoundProduct,
+    SingleProduct,
+    Products}
 
   setup do
     products = [

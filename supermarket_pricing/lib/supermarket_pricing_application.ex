@@ -6,9 +6,9 @@ defmodule SupermarketPricingApplication do
   alias Domain.{
     BundleProduct,
     FoundProduct,
+    SingleProduct,
     Product,
-    Products,
-    SingleProduct}
+    Products}
 
   @doc """
   Endpoints for `SupermarketPricing`.
