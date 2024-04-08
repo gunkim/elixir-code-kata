@@ -97,9 +97,9 @@ defmodule FoundProduct do
     end
 
     def price(product, found) do
-      Decimal.new(product.price)
-      |> Decimal.mult(Decimal.new(product.found))
-      |> (&Decimal.mult(found, &1)).()
+      product.price
+      |> Decimal.mult(Decimal.new(found))
+      |> (&Decimal.div(&1, Decimal.new(product.found))).()
       |> Decimal.round(2)
     end
   end
