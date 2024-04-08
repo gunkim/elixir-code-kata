@@ -1,4 +1,4 @@
-defmodule ProductsTest do
+defmodule Domain.ProductsTest do
   use ExUnit.Case
   doctest Domain.Products
 
