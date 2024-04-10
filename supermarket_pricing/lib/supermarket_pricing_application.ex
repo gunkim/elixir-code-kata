@@ -27,20 +27,18 @@ defmodule SupermarketPricingApplication do
     products |> Enum.each(&Product.print_product/1)
     IO.puts("=======================")
 
-    selected_product =
-      IO.gets("Enter product name: ")
-      |> String.trim()
-      |> (&Products.search(products, &1)).()
+    selected_product = IO.gets("Enter product name: ")
+                       |> String.trim()
+                       |> (&Products.search(products, &1)).()
 
     IO.puts "Information of the product you want to buy:"
     Product.print_product(selected_product)
 
     IO.puts "Please enter the quantity or weight(found) you wish to purchase."
 
-    purchase_quantity_or_weight =
-      IO.gets("Input quantity or weight(found): ")
-      |> String.trim()
-      |> Decimal.new()
+    purchase_quantity_or_weight = IO.gets("Input quantity or weight(found): ")
+                                  |> String.trim()
+                                  |> Decimal.new()
 
     result = Product.price(selected_product, purchase_quantity_or_weight)
     IO.puts "Total Price: #{Decimal.to_string(result)}"
